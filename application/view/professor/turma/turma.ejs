@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/professor/turma/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="../js/professor/turma/script.js"></script>
+</head>
+<body>
+                <header> 
+                                <div class="logoSpade">
+                                    <img src="../../img/icons/spade.png">
+                                </div>
+                                 
+                                <div class="usuario">
+                                  <div class="nomeUsuario">
+                                    <div>
+                                      <img src="../../img/icons/professor.png">
+                                    </div>
+                                    <div>
+                                      <p><%=nome%></p>
+                                    </div>
+                                  </div>
+                                  <div class="instituicoesUsuario">
+                                    <div>
+                                      <img src="../../img/icons/escola.png">
+                                    </div>
+                                    <div>
+                                      <form id="instituicao" action="/professor" method="post" class="instituicao">
+                                      <select name="instituicao"  class="select" id="selectInstituicao"> 
+                                        <option value="<%=instituicao.id%>"><%=instituicao.nm_instituicao%></option>
+                                            <% for(institu of instituicoes){%>
+                                                <option value="<%=institu.id%>"><%=institu.nm_instituicao%></option>
+                                            <%}%>
+                                      <option value="nova">Nova Instituicao</option>
+                                      </select>
+                                    </form>
+                                  </div>
+                                  </div>
+                                </div>
+                                <div class="sair">
+                                    <a href="/sair" ><img src="../../img/icons/sair.png"></a>
+                                </div>
+                                
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalInstituicao" id="novaInstituicao" style="display: none"></button>
+                            </header>
+
+        <div class="modal fade" id="modalAluno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Cadastrar novo Aluno</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModalAluno">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="pos-f-t">
+                            <nav class="navbar navbar-dark" style="background-color: transparent;">
+                              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span>Aluno Existente</span>
+                              </button>
+                            </nav>
+                            <div class="collapse col-md-12" id="navbarToggleExternalContent">
+                              <div class="p-2 col-md-12" style="background-color: transparent;">
+                                    <div class="form-row col-md-12">
+                                        <div class="form-group col-md-6">
+                                          <input type="text" id="campoProcurarAluno" placeholder="Nome do Aluno" class="form-control">
+                                          <input type="text" id="idInsituicao" value="<%=instituicao.id%>" hidden>
+                                          <input type="text" id="idTurma" value="<%=turma%>" hidden>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                          <button type="submit" id="procurarAluno" class="btn btn-info" title="procurar">Pesquisar</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-row col-md-12">
+                                        <div class="form-group col-md-6">
+                                            <select id="alunoResultados" class="form-control" style="visibility: hidden">
+                                              </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <button type="submit" id="cadastraAlunoTurma" class="btn btn-primary" name="cadastrar">Cadastrar</button>
+                                        </div>
+                                    </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- <hr class="linha1"> -->
+                          <div class="pos-f-t">
+                              <nav class="navbar navbar-dark" style="background-color: transparent;">
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleNovoAluno" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                                  <span>Novo Aluno</span>
+                                </button>
+                              </nav>
+                              <div class="collapse" id="navbarToggleNovoAluno">
+                                <div class="p-4" style="background-color: transparent;">
+                                    <div class="form-row col-md-12">
+                                      <div class="form-group col-md-6">
+                                        <input type="text" class="form-control" name="nm_aluno" placeholder="Nome do aluno">
+                                      </div>
+                                      <div class="form-group col-md-6">
+                                        <input type="text" class="form-control" name="matricula" placeholder="Matricula">
+                                      </div>
+                                    </div>
+                                    <div class="form-row col-md-12">
+                                      <div class="form-group col-md-6">
+                                        <div>
+                                          <label>Foto do aluno:</label>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="imagem" id="imagem">
+                                            <label class="custom-file-label" for="validatedCustomFile">Escolha o arquivo</label>
+                                        </div>
+                                      </div>
+                                      <div class="form-group col-md-6">
+                                          <div>
+                                              <label>Data de Nascimento:</label>
+                                          </div>
+                                          <input class="form-control" type="date" name="dt_nascimento" required>
+                                      </div>
+                                    </div>
+                                          <input type="hidden" name='id_turma' value="<%=turma%>">
+                                          <input type="hidden" name='nm_esporte'>
+                                          <input type="hidden" name='nm_problema'>
+                                          <ul id="listaEsporte"></ul>
+                                          <ul id="listaProblemaSaude"></ul>
+                                    <div class="form-row col-md-12">
+                                        <div class="form-group col-md-6">
+                                            <div class="form-row col-md-12">
+                                                <div class="form-group col-md-11">
+                                                    <input type="text" class="form-control" placeholder="esporte" id="esporte">
+                                                </div>
+                                                <div class="form-group col-md-1">
+                                                    <button name="submit" class="btn btn-info" id="cadastraEsporte">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <div class="form-row col-md-12">
+                                                <div class="form-group col-md-11">
+                                                    <input type="text" class="form-control" placeholder="problema de saude" id="problema">
+                                                </div>
+                                                <div class="form-group col-md-1">
+                                                    <button name="submit" class="btn btn-info" id="cadastraProblema">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row col-md-12">
+                                        <div class="col-md-6">
+                                            <div id="textoEsporte"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="textoProblema"></div>
+                                        </div>
+                                    </div>
+                                          <input type="submit" class="btn btn-primary" name="submit" id="cadastrarAluno">
+                                        </div>
+                                  </div>
+                                </div>
+                              </div>
+                      
+                                
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal fade" id="modalInstituicao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Cadastrar nova Instituicao</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/professor/inserirInstituicao" class="novaInstituicao" method="post">
+                          <div class="form-row col-md-11">
+                              <div class="form-group col-md-9">
+                                <input type="text" name='nm_instituicao' placeholder="Nome" id="nm_instituicao" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                              </div>
+                          </div>
+                          <div class="form-row col-md-11">
+                              <div class="form-group col-md-6">
+                                <input type="number" name='cep' placeholder="CEP" id="cep" onfocusout="buscacep()" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                              </div>
+                              <div class="form-group col-md-3">
+                                <input type="number" name='numero' placeholder="Nº" id="numero" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                              </div>
+                          </div>
+                        <input type="hidden" name='fk_cd_confef' value="<%=cd_confef%>">
+                        <input type="hidden" name='estado'>
+                        <input type="hidden" name='cidade'>
+                        <input type="hidden" name='rua'>
+                        <div id="exibeEndereco" class="exibeEndereco">
+                        </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <input type="submit" class="btn btn-primary" id="cadastraInstituicao">
+                  </div>
+                </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal fade" id="modalEditarTurma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Cadastrar nova Instituicao</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="div1"></div>
+                      <form action="/professor/editarTurma" method="post">
+        
+                            <label>Novo nome de turma:</label>
+                            <div class="form-row col-md-12">
+                              <div class="form-group col-md-6">
+                                <input type="text" class="form-control" name='nm_turma' id="nm_turma">
+                              </div>
+                            </div>
+                            <input type="number" name='id_turma' id="id_turma" value="<%=turma%>" hidden>
+                     
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                <input type="submit" class="btn btn-primary" id="cadastraModelo">
+                            </div>
+                    </form>
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+                  <div class="alert alert-success" role="alert" style="visibility: hidden">
+                   
+                  </div>
+                
+                  <div class="alert alert-danger" role="alert" style="visibility: hidden">
+                    
+                  </div>
+                
+         
+            
+
+        <div class="menu">
+                <div class="tituloTurma">
+                        <p class="paragrafo">Você está na turma:<%=turma%></p>
+                        <div class="botao">
+                            <button type="button" class="btn btn-secondary btn-sm"><a href="/professor"><p class="teste"><img src="../../img/icons/return.png"></p></a></button>
+                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalEditarTurma" id="botao"><p class="teste"><img src="../../img/icons/edit.png"></p></button>
+                        </div>
+                        
+                </div>
+                <div class="tituloAluno">
+                  <div class="buscarAluno">
+                      <p class="paragrafo">Buscar aluno:</p>
+                      <input type="text" id="txtBusca">
+                  </div>
+                        
+                        <div class="botao">
+                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalAluno" id="botao"><p class="teste"><img src="../../img/icons/more.png"></p></button>
+                        </div>
+                        
+                </div>
+                
+                <div class="conteudo">
+                         
+                </div>
+            </div>
+
+</body>
+</html>

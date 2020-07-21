@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/professor/turma/aluno/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var $ = $.noConflict(true);
+    </script>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/roundSlider/1.3.2/roundslider.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/roundSlider/1.3.2/roundslider.min.js"></script>
+    <script type="text/javascript">
+        var $j = $.noConflict(true);
+    </script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="../../js/professor/turma/aluno/script.js"></script>
+
+
+
+
+</head>
+<body>
+    <header> 
+        <div class="logoSpade">
+            <img src="../../img/icons/spade.png">
+        </div>
+         
+        <div class="usuario">
+          <div class="nomeUsuario">
+            <div>
+              <img src="../../img/icons/professor.png">
+            </div>
+            <div>
+              <p><%=nome%></p>
+            </div>
+          </div>
+          <div class="instituicoesUsuario">
+            <div>
+              <img src="../../img/icons/escola.png">
+            </div>
+            <div>
+              <form id="instituicao" action="/professor" method="post" class="instituicao">
+              <select name="instituicao"  class="select" id="selectInstituicao"> 
+                  <option value="<%=instituicao.id%>"><%=instituicao.nm_instituicao%></option>
+                    <% for(instituicao of instituicoes){%>
+                        <option value="<%=instituicao.id%>"><%=instituicao.nm_instituicao%></option>
+                    <%}%>
+              <option value="nova">Nova Instituicao</option>
+              </select>
+            </form>
+          </div>
+          </div>
+        </div>
+        <div class="sair">
+            <a href="/sair" ><img src="../../img/icons/sair.png"></a>
+        </div>
+        
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalInstituicao" id="novaInstituicao" style="display: none"></button>
+    </header>
+
+
+    <div class="modal fade" id="modalAvaliacao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Cadastrar nova avaliacao</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="conteudo">
+                <div class="form-row col-md-12">
+                    <div class="form-group col-md-3"></div>
+                    <div class="form-group col-md-6">
+                      <select name="modelo" id="modelo" class="form-control">
+                        <option value="">nova avaliacao</option>
+                    </select>
+                    </div>
+                    <div class="form-group col-md-3"></div>
+                </div>
+                    <input type="text" name="fk_id_modelo" id="id_modelo" hidden>
+                    <input type="text" name="fk_id_aluno" value="<%=aluno.id%>" id="id_aluno" hidden>
+                  <div class="form-row col-md-12">
+                      <div class="form-group col-md-3"></div>
+                      <div class="form-group col-md-6">
+                          <div id="labelDataAv" style="visibility: hidden">
+                              <label>Data de Avaliacao:</label>
+                          </div>
+                          <input type="date" class="form-control" name="dt_avaliacao" id="data_avaliacao" style="visibility: hidden">
+                      </div>
+                      <div class="form-group col-md-3"></div>
+                  </div>
+                    <div id="avaliar">
+                            <input type="hidden" value="" name="resultado">
+                            <input type="hidden" value="" name="fk_id_exercicio">
+                        <div id="listaAvaliacoes" class="form-row col-md-12" style="text-align: center;">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <input type="submit" class="btn btn-primary" name="cadastrar" id="novaAvaliacao" style="visibility: hidden">
+                      </div>                    
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modalInstituicao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Cadastrar nova Instituicao</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form action="/professor/inserirInstituicao" class="novaInstituicao" method="post">
+                  <div class="form-row col-md-11">
+                      <div class="form-group col-md-9">
+                        <input type="text" name='nm_instituicao' placeholder="Nome" id="nm_instituicao" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                      </div>
+                  </div>
+                  <div class="form-row col-md-11">
+                      <div class="form-group col-md-6">
+                        <input type="number" name='cep' placeholder="CEP" id="cep" onfocusout="buscacep()" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                      </div>
+                      <div class="form-group col-md-3">
+                        <input type="number" name='numero' placeholder="Nº" id="numero" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                      </div>
+                  </div>
+                <input type="hidden" name='fk_cd_confef' value="<%=cd_confef%>">
+                <input type="hidden" name='estado'>
+                <input type="hidden" name='cidade'>
+                <input type="hidden" name='rua'>
+                <div id="exibeEndereco" class="exibeEndereco">
+                </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <input type="submit" class="btn btn-primary" id="cadastraInstituicao">
+          </div>
+        </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modalEditarAvaliacao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Editar Avaliação</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row col-md-12">
+                    <div class="form-group col-md-3"></div>
+                    <div class="form-group col-md-6">
+                      <div>
+                          <label>Modelo de avaliação:</label>
+                      </div>
+                        <input type="text" class="form-control" readonly name='nm_avaliacao' id="nm_editarAvaliacao">
+                        <input type="text" name='id_avaliacao' id="id_editarAvaliacao" hidden>
+                    </div>
+                    <div class="form-group col-md-3"></div>
+                </div>
+                    <div class="form-row col-md-12" id="resultadosEditar" style="text-align: center;">
+                    </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="closeModalEditarAvaliacao" data-dismiss="modal">Fechar</button>
+                <input type="submit" class="btn btn-primary" id="btn_editarAvaliacao">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modalEditarAluno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Editar Aluno</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="/professor/turma/aluno/editarAluno" class="novaInstituicao" method="post">
+                <div class="form-row col-md-12">
+                    <div class="form-group col-md-6">
+                      <input type="hidden" name="turmaId" id="idAluno" value="<%=turmaId%>">
+                      <input type="hidden" name="idAluno" id="idAluno" value="<%=aluno.id%>">
+                      <input type="text" class="form-control" name="nm_aluno" id="nm_aluno" value="<%=aluno.nm_aluno%>">
+                    </div>
+                    <div class="form-group col-md-6">
+                    <input type="text" class="form-control" name="matricula" id="matricula" value="<%=aluno.matricula%>">
+                    </div>
+                </div>
+                <div class="form-row col-md-12">
+                    <div class="form-group col-md-3">
+                    </div>
+                <div class="form-group col-md-6">
+                    <input type="date" class="form-control" name="dt_nascimento" id="dt_nascimento" value="<%=aluno.dt_nascimento%>">
+                </div>
+                <div class="form-group col-md-3">
+                  </div>
+                </div>
+                
+                
+              
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="closeModalEditarAaluno" data-dismiss="modal">Fechar</button>
+                <input type="submit" class="btn btn-primary" id="btn_editarAaluno">
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="modal fade" id="modalExcluirAluno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Excluir Aluno</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="/professor/turma/aluno/excluirAluno" class="novaInstituicao" method="post">
+                <input type="hidden" name="idAluno" id="idAluno" value="<%=aluno.id%>">
+                <input type="hidden" name="turmaId" id="turmaId" value="<%=turmaId%>">
+                <label>Deseja excluir o aluno?</label>
+                <button type="button" class="btn btn-secondary" id="closeModalEditarAaluno" data-dismiss="modal">Não</button>
+                <input type="submit" class="btn btn-primary" value="Sim" name="Sim" id="btn_editarAaluno"> 
+            </form>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="alert alert-success" role="alert" style="visibility: hidden">
+                   
+      </div>
+    
+      <div class="alert alert-danger" role="alert" style="visibility: hidden">
+        
+      </div>
+    
+    <div class="box">
+            <div class="superior">
+                    <div class="aluno">
+                        <div class="imagem">
+                          <%if(aluno.id_imagem  != null){%>
+                            <img src="../../img/avatar/<%=aluno.id_imagem%>">
+                            <%}else{%>
+                            <img src="../../img/student-girl.png">
+                            <%}%>
+                        </div>
+                        <div class="dados">
+                            <div class="conteudo">
+                                    <p>Nome: <%=aluno.nm_aluno%></p>
+                                    <p>Matricula: <%=aluno.matricula%></p>
+                            </div>
+                            <div class="conteudo">
+                              <%if (aluno.dt_nascimento){%>
+                                    <p>Nascimento: <%=aluno.dt_nascimento.toLocaleDateString()%></p>
+                              <%}%>
+                            </div>
+                            <div class="conteudo">
+                              <%if(esportes.length > 0){%>
+                                    <p>Esportes:<%for(esporte of esportes){%>
+                                        <%=esporte.nm_esporte%>,
+                                        <%}%></p>
+                              <%}%>
+                              <%if(problemas.length > 0){%>
+                                    <p>Problemas de Saúde:
+                                        <%for(problema of problemas){%>
+                                        <%=problema.nm_problema%>,
+                                        <%}%></p>
+                              <%}%>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-info" id="editarAluno" data-toggle="modal" data-target="#modalEditarAluno" style="height: 40px;"><img src="../../img/icons/edit.png"></button>
+                    <!-- <button type="button" class="btn btn-danger" id="excluirAluno" data-toggle="modal" data-target="#modalExcluirAluno" style="height: 40px;"><img src="../../img/icons/excluir.png"></button> -->
+                </div>
+                
+
+
+                <div class="avaliacao" id="avaliacao">
+                    <div class="menu">
+                        <div class="botoes">
+                          <div class="listaAvaliacao">
+                              <img src="../../img/icons/avaliacao.png">
+                              <select name="avaliacao" class="form-control" id="selectAvaliacao">
+                                  
+                                  <option value="" >null</option>
+                                  </select>
+                          </div>
+                          <div class="cadastraAvaliacao">
+                              <button type="button" class="btn btn-warning" id="editarAvaliacao" data-toggle="modal" data-target="#modalEditarAvaliacao" style="visibility: hidden;"><img src="../../img/icons/edit.png"></button>
+                              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAvaliacao"><img src="../../img/icons/more.png"></button>  
+                          </div>
+                          </div>
+
+                        <div class="dados" id="dadosAvaliacao" style="visibility: hidden;">
+                            <p id="dataAvaliacao">Data Avaliacao: </p>
+                           
+                        </div>
+                    </div>
+                    
+                    <div class="listagemExercicio" id="listagemExercicio" style="visibility: hidden;">
+                    <div class="exercicio">
+                        <div class="nome">Nome do exercicio: </div>
+                        <div class="resultado">
+                            <div class="conteudo">resultado: </div>
+                            <div class="conteudo">
+                                    <div id="slider"></div>
+                            </div>
+                            <!-- <div class="conteudo">Desempenho: </div> -->
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>
+
+    </div>
+ 
+</body>
+</html>

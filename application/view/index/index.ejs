@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index/style.css">
+    <script type="text/javascript" src="js/index/script.js"></script>
+</head>
+<body>
+    <header>
+            <div class="logoSpade">
+                    <img src="../../img/icons/spade.png">
+                </div>
+        <div class="form">
+            <form action="/login" method="post" class="form-inline" id="teste">
+                <div class="form-group">
+                    <input type="text" name="login" placeholder="Email ou Codigo Confef" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="senha" placeholder="Senha" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn btn-primary" onclick="teste()">
+                </div>
+            </form>
+        </div>
+    </header>
+    <div id="corpo">
+        <div id="turma">
+            <form action="/turma" method="post" class="form-inline">
+                <div class="form-group">
+                    <input type="text" name="chave" placeholder="Chave da Turma" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Buscar" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+            
+        
+
+        <div id="cadastro">
+            <form action="/cadastrar" method="post">
+                <legend>Cadastre-se</legend>
+                    <div class="form-group">
+                        <input type="text" name="nm_professor" placeholder="Nome" class="form-control">
+                        <input type="text" name="email" placeholder="E-mail" class="form-control">
+                        <input type="text" name="cd_confef" placeholder="Codigo Confef" class="form-control">
+                        <input type="password" name="senha" placeholder="Senha" class="form-control">
+                        <input type="password" name="confirmaSenha" placeholder="Confirme a Senha" class="form-control">
+                        <input type="submit" value="Cadastrar" class="btn btn-secondary">
+                    </div>
+
+            </form>
+        </div>
+        
+    </div>
+    
+
+
+</body>
+</html>

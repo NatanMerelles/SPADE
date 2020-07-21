@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/professor/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="js/professor/script.js"></script>
+</head>
+<body>
+    <header> 
+        <div class="logoSpade">
+            <img src="../../img/icons/spade.png">
+        </div>
+         
+        <div class="usuario">
+          <div class="nomeUsuario">
+            <div>
+              <img src="../../img/icons/professor.png">
+            </div>
+            <div>
+              <p><%=nome%></p>
+            </div>
+          </div>
+          <div class="instituicoesUsuario">
+            <div>
+              <img src="../../img/icons/escola.png">
+            </div>
+            <div>
+              <form id="instituicao" action="/professor" method="post" class="instituicao">
+              <select name="instituicao"  class="select" id="selectInstituicao"> 
+                <option value="<%=instituicao.id%>"><%=instituicao.nm_instituicao%></option>
+                    <% for(institu of instituicoes){%>
+                        <option value="<%=institu.id%>"><%=institu.nm_instituicao%></option>
+                    <%}%>
+              <option value="nova">Nova Instituicao</option>
+              </select>
+            </form>
+          </div>
+          </div>
+        </div>
+        <div class="sair">
+            <a href="/sair" ><img src="../../img/icons/sair.png"></a>
+        </div>
+        
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalInstituicao" id="novaInstituicao" style="display: none"></button>
+    </header>
+
+    
+  
+  
+  <!-- Modal -->
+  <div class="modal fade" id="modalModelo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Novo Modelo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModalModelo">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            
+              
+            <form action="professor/inserirModelo" method="post" id="sub">
+                <fieldset>
+                    <div class="form-row col-md-11">
+                      <div class="form-group col-md-8">
+                        <input type="text" name="nm_modelo" placeholder="Nome do Modelo" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                      </div>
+                      <hr class="linha1">
+                    </div>
+                      <input type="hidden" name="id_professor" value="<%=cd_confef%>">
+                    <ul id="listaExercicios">
+                      <div id="exercicio">
+                          <input type="hidden" name="name_exercicio" value="">
+                          <input type="hidden" name="ruim" value="">
+                          <input type="hidden" name="bom" value="">
+                          <input type="hidden" name="uni_medida" value="">
+                      </div>
+                    </ul>
+                </fieldset>
+            </form>
+
+            <div class="d-flex flex-column">
+              <div class="form-row col-md-11">
+                <div class="form-group col-md-8">
+                  <input type="text" name="nm_exercicio" placeholder="Nome do exercicio" id="nm_exercicio" class="form-control">
+                </div>
+                <div class="form-group col-md-4">
+                    <select name="unidade_medida" placeholder="Unid Medida" id="unidade_medida" class="form-control">
+                      <option value="1">Rep/Min</option>
+                      <option value="2">Segundos</option>
+                      <option value="3">Minutos</option>
+                      <option value="4">Metros</option>
+                      <option value="5">Quilometros</option>
+                    </select>
+                </div>
+              </div>
+              <div class="form-row col-md-11">
+                <div class="form-group col-md-4">
+                    <input type="number" name="valor_ruim" placeholder="Valor ruim" id="valor_ruim" class="form-control">  
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="number" name="valor_bom" placeholder="Valor bom" id="valor_bom" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">    
+                </div>
+                <div class="form-group col-md-4">
+                    <button name="submit" class="btn btn-info" id="testando">+</button>
+                </div>
+              </div>
+            </div>
+              <div id="textoExercicios"></div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <input type="submit" class="btn btn-primary" id="cadastraModelo">
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalTurma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nova Turma</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModalTurma">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">            
+          <fieldset>
+            <div class="form-row col-md-12">
+                <div class="form-group col-md-3">
+                </div>
+              <div class="form-group col-md-6">
+                <input type="text" name="nm_turma" placeholder="Nome" id="nm_turma" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" name="chave_acesso" id="chave_acesso" hidden>
+                <input type="hidden" name="fk_id_instituicao" id="fk_id_instituicao" value="<%=instituicao.id%>">
+                <input type="hidden" name="fk_cd_professor" id="fk_cd_professor" value="<%=cd_confef%>">
+              </div>
+              <div class="form-group col-md-3">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <input type="submit" class="btn btn-primary" id="cadastraTurma">
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <div class="modal fade" id="modalInstituicao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Cadastrar nova Instituicao</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="/professor/inserirInstituicao" class="novaInstituicao" method="post">
+                      <div class="form-row col-md-11">
+                          <div class="form-group col-md-9">
+                            <input type="text" name='nm_instituicao' placeholder="Nome" id="nm_instituicao" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                          </div>
+                      </div>
+                      <div class="form-row col-md-11">
+                          <div class="form-group col-md-6">
+                            <input type="number" name='cep' placeholder="CEP" id="cep" onfocusout="buscacep()" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                          </div>
+                          <div class="form-group col-md-3">
+                            <input type="number" name='numero' placeholder="Nº" id="numero" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                          </div>
+                      </div>
+                    <input type="hidden" name='fk_cd_confef' value="<%=cd_confef%>">
+                    <input type="hidden" name='estado'>
+                    <input type="hidden" name='cidade'>
+                    <input type="hidden" name='rua'>
+                    <div id="exibeEndereco" class="exibeEndereco">
+                    </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <input type="submit" class="btn btn-primary" id="cadastraInstituicao">
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="mensagem"></div>
+
+          <div class="alert alert-success" role="alert" id="alert" style="visibility: hidden">
+       
+          </div>
+  
+          <div class="alert alert-danger" role="alert" id="alert" style="visibility: hidden">
+          
+          </div>
+       
+    <div id="modelos" class="menu">
+            <div class="titulo">
+                <p class="paragrafo">Modelos de avaliacao:</p>
+                <div class="botao">
+                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalModelo" id="botao"><p class="teste"><img src="../../img/icons/more.png"></p></button>
+              </div>
+              </div>
+            <div id="scrollmenu" class="modelos">
+               
+            </div>
+        </div>
+
+    <div id="turmas" class="menu">
+        <div class="titulo">
+              <p class="paragrafo">Turmas:</p>
+              <div class="botao">
+              <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalTurma" id="botao"><p class="teste"><img src="../../img/icons/more.png"></p></button>
+            </div>
+            </div>
+        <div id="scrollmenu" class="turmas">
+                        
+        </div>
+    </div>
+    
+    
+</body>
+</html>
+

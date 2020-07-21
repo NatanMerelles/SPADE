@@ -1,0 +1,258 @@
+body{
+  margin: 0;
+  padding: 0;
+  background-color: #E5E5E5;
+}
+header{ 
+  position: relative;
+  width: 100%;
+  height: 64px;
+  background-color: #051923;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+header .logoSpade{
+  width: 10%;
+  display: flex;
+  justify-content: center;
+}
+
+header .logoSpade img{
+  width: 50%;
+}
+
+header .usuario{
+  height: 100%;
+  width: 80%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  flex-wrap: nowrap;
+}
+header .usuario img{
+  width: 20px;
+  height: 20px;
+}
+header .usuario .nomeUsuario{
+  height: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+header .usuario .instituicoesUsuario{
+  height: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+header .usuario .instituicoesUsuario .select{
+  background-color: #051923;
+  border: none;
+  color: #E5E5E5;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100px;
+}
+
+header .sair{
+  width: 10%;
+  display: flex;
+  justify-content: center;
+}
+header .sair img{
+  width: 20px;
+}
+
+.menu{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 70%;
+  height: 270px;
+  background-color: #D5D5D5;
+  margin-left: 15%;
+  margin-top:50px;
+  
+}
+.menu .titulo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 15%;
+  width: 100%;
+  border: 1px solid rgba(85, 85, 85, .2);
+  align-items: center;
+}
+
+.menu .titulo .botao{
+  height: 75%;
+  width: 20%;
+  display: flex;
+  flex-wrap: nowrap; 
+  justify-content: flex-end;
+}
+
+.menu .titulo .paragrafo{
+  height: 75%;
+  margin: 10px;
+  text-align: center;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-shrink: 1;
+  font-size: 100%;
+}
+
+.menu .titulo .botao .btn{
+  margin-right: 5%;
+  display: flex;
+}
+
+.menu .titulo .btn img{
+  width: 17px;
+}
+
+#scrollmenu {
+  height: 150px;
+  width: 95%;
+  background-color: #D5D5D5;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  overflow-x: auto;
+  }
+  
+  #scrollmenu .item {
+    width: 100px;
+    height: 75px;
+    background-color: #124E78;
+    margin: 5px;
+    flex-shrink: 0;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  #scrollmenu .item:hover {
+    background-color: white;
+    color: #124E78;
+  }
+
+  /* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 7px;
+  
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #D5D5D5; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+.sair{
+  color: white;
+  text-decoration: none;
+}
+.sair:hover{
+  color: white;
+  text-decoration: none;
+}
+
+
+.instituicao .primeiro{
+  background-color: #555
+}
+
+.modal-content{
+  background-color: #051923;
+  color: #D5D5D5;
+}
+
+.formularioInstituicao{
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.formularioInstituicao .campoNome{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.formularioInstituicao .campoNome #nm_instituicao{
+  width: 43%;
+}
+.formularioInstituicao .digitaEndereco{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.formularioInstituicao .digitaEndereco #numero{
+  width: 15%;
+}
+.formularioInstituicao .digitaEndereco .labelNumero{
+  margin-left: 5%;
+}
+.formularioInstituicao .digitaEndereco #cep{
+  width: 35%;
+}
+
+.teste{
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+
+.item{
+  background-color: #051923;
+  border: none;
+  color: #E5E5E5;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.item .infoChave{
+  font-size: 12px
+}
+
+.alert{
+  width: 300px;
+  float: right;
+  margin-right: 15%;
+}
+
+.linha1{
+  border:none;
+  border-top:1px solid #8c8b8b;
+  color:#fff;
+  background-color:#fff;
+  height:1px;
+  width:100%;
+}

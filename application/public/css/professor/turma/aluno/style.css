@@ -1,0 +1,254 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #E5E5E5;
+}
+header{ 
+    position: relative;
+    width: 100%;
+    height: 64px;
+    background-color: #051923;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+  }
+  header .logoSpade{
+    width: 10%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  header .logoSpade img{
+    width: 50%;
+  }
+  
+  header .usuario{
+    height: 100%;
+    width: 80%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    flex-wrap: nowrap;
+  }
+  header .usuario img{
+    width: 20px;
+    height: 20px;
+  }
+  header .usuario .nomeUsuario{
+    height: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+  }
+  
+  header .usuario .instituicoesUsuario{
+    height: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+  }
+  header .usuario .instituicoesUsuario .select{
+    background-color: #051923;
+    border: none;
+    color: #E5E5E5;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100px;
+  }
+  
+  header .sair{
+    width: 10%;
+    display: flex;
+    justify-content: center;
+  }
+  header .sair img{
+    width: 20px;
+  }
+
+
+.box{
+    width: 80vw;
+    height: 700px;
+    background-color: #d5d5d5;
+    margin-left: 10%;
+    margin-top:50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.superior{
+    width: 100%;
+    height: 20%;
+    border: 1px solid rgba(85, 85, 85, .2);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.superior .aluno{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.superior .aluno .imagem{
+    width: 100px;
+    border-radius: 50%;
+    background-color: #051923;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgba(85, 85, 85, .2);
+} 
+.superior .aluno .imagem img{
+  width: 100px;
+    height: 100px;
+    
+    border-radius: 50px;
+}
+
+.superior .aluno .dados{
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.superior .aluno .dados .conteudo{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    font-size: 2vmin;
+}
+
+.box .avaliacao{
+    width: 100%;
+    height: 80%;
+    border: 1px solid rgba(85, 85, 85, .2);
+}
+
+.avaliacao{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avaliacao .menu{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 20%;
+}
+
+.avaliacao .menu .botoes{
+    height: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.avaliacao .menu .botoes .cadastraAvaliacao img{
+  width: 20px;
+  display: flex;
+  flex-direction: row;
+}
+.avaliacao .menu .botoes .listaAvaliacao{
+  display: flex;
+  flex-direction: row;
+}
+.avaliacao .menu .botoes .listaAvaliacao img{
+  width: 30px;
+}
+.avaliacao .menu .dados{
+    display: flex;
+    flex-direction: row;
+}
+
+.avaliacao .listagemExercicio{
+    height: 80%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    font-size: 2vmin;
+    overflow-x: auto;
+}
+
+.listagemExercicio .exercicio{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(85, 85, 85, .2);
+}
+
+.listagemExercicio .exercicio .resultado{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.listagemExercicio .exercicio .nome{
+    background-color: #C0C0C0;
+}
+
+.exercicio:hover{
+    background-color: white;
+    border: 1px solid #051923;
+}
+
+.exercicio:hover .nome{
+    background-color: #D5D5D5;
+}
+
+#avaliar{
+    display: flex;
+    flex-direction: column;
+}
+#avaliar #exercicio{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.modal-content{
+    background-color: #051923;
+    color: #D5D5D5;
+  }
+  .teste{
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  
+  .item{
+    background-color: #051923;
+    border: none;
+    color: #E5E5E5;
+  }
+
+  #slider .rs-range-color  {
+    background-color: #00FFF5;
+}
+.slider .rs-path-color  {
+    background-color: #9932CC;
+    border-radius: 0;
+}
+.slider .rs-handle  {
+    background-color: #00FFF5;
+}
+.slider .rs-border  {
+    border: 8px solid #051923;
+}
+
+.alert{
+  width: 300px;
+  float: right;
+  margin-right: 10%;
+}
